@@ -1,0 +1,35 @@
+.BOX {
+    flex: 1;
+    color: #FFF;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1.2rem;
+}
+
+.IMG {
+    width: 50px;
+    height: 50px;
+    padding: .8rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;    
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.IMG img {
+    width: 100%;
+}
+
+.TITLE {
+    font-weight: bold;
+}
+
+.DESC {
+    font-size: .7rem;
+}
