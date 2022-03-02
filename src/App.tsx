@@ -1,19 +1,18 @@
 import React from 'react';
-import { useState, useReducer } from 'react';
+import { useState } from 'react';
 
 import styles from './App.module.css'
 import { Box } from './components/Box';
-import { levels, Calculate } from './helpers/imc';
+import { levels, Calculate, LevelType } from './helpers/imc';
 
-import down from './assets/down.png';
-import leftarrow from './assets/leftarrow.png';
+import arrow from './assets/leftarrow.png';
 import logo from './assets/powered.png';
-import up from './assets/up.png';
 
 const App = () => {
 
   const [peso, setPeso] = useState<number>(0);
   const [altura, setAltura] = useState<number>(0);
+  const [toShow, setToShow] = useState<LevelType | null>(null);
 
   const HPESO = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPeso(parseFloat(event.target.value));
@@ -30,8 +29,13 @@ const App = () => {
       return;
     }
 
-    const result = Calculate(altura, peso);
+    setToShow(Calculate(altura, peso));    
+  }
 
+  const PREV = () => {
+    setToShow(null);
+    setAltura(0);
+    setPeso(0);    
   }
 
   return (
@@ -54,33 +58,46 @@ const App = () => {
             <div className={styles.item}>
               <input
                 type="number"
-                value={(peso > 0) ? peso : ''}
-                onChange={HPESO}
-                placeholder="Informe seu peso"
+                value={(altura > 0) ? altura : ''}
+                onChange={HALTURA}
+                placeholder="Informe sua altura"
+                disabled={(toShow) ? true : false}
               />
             </div>
 
             <div className={styles.item}>
               <input
                 type="number"
-                value={(altura > 0) ? altura : ''}
-                onChange={HALTURA}
-                placeholder="Informe sua altura"
+                value={(peso > 0) ? peso : ''}
+                onChange={HPESO}
+                placeholder="Informe seu peso"
+                disabled={(toShow) ? true : false}
               />
             </div>
 
           </div>
-          <button onClick={HandleClick} className={styles.button}>Calcular</button>
+          <button disabled={(toShow) ? true : false} onClick={HandleClick} className={styles.button}>Calcular</button>
         </div>
-        <div className={styles.right}>
-          <div className={styles.grid}>
 
-            {levels.map((level, index) => (
-              <Box key={index} item={level} />
-            ))}
-
+        {!toShow &&
+          <div className={styles.right}>
+            <div className={styles.grid}>
+              {levels.map((level, index) => (
+                <Box key={index} item={level} />
+              ))}
+            </div>
           </div>
-        </div>
+        }
+
+        {toShow &&
+          <div className={styles.BIG}>
+            <div className={styles.PREV} onClick={PREV}>
+              <img src={arrow} width={25} />
+            </div>
+            <Box item={toShow} />
+          </div>
+        }
+
       </main >
     </div >
   );

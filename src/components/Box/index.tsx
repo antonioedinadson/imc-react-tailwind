@@ -15,6 +15,13 @@ export const Box = ({ item }: BoxType) => {
             <div className={styles.IMG}>
                 <img src={(item.icon == 'up') ? up : down} />
             </div>
+
+            {item.yourIMC &&
+                <div className={styles.YOURIMC}>
+                    Seu IMC: {item.yourIMC.toFixed(2)} KG/m²
+                </div>
+            }
+
             <h2 className={styles.TITLE}>{item.title}</h2>
             <h3 className={styles.DESC}>IMC está entre {item.imc[0]} e {item.imc[1]}</h3>
         </div>

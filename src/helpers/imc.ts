@@ -42,9 +42,11 @@ export const Calculate = (heigth: number, weight: number) => {
 
     for (let i in levels) {
         
-        if(imc >= levels[i].imc[0] || imc <= levels[i].imc[1]) {
-            levels[i].yourIMC = imc;
-            return levels[i];
+        if(imc >= levels[i].imc[0] && imc <= levels[i].imc[1]) {
+            
+            let newLevels: LevelType = {...levels[i]}
+            newLevels.yourIMC = imc;
+            return newLevels;
         }
     }
 
